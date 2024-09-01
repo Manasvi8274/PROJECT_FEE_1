@@ -28,12 +28,22 @@ function main(ctime) {
 }
 
 function isCollide(snakearr) {
+    //if snake eat itself
+    for(let i =1;i < snakearr.length;i++){
+        if (snakearr[i].x === snakearr[0].x && snakearr[i].y === snakearr[0].y){
+            return true;
+        }
+    }
+    if (snakearr[0].x >= 18 || snakearr[0].x<=0 || snakearr[0].y>=18 || snakearr[0].y <= 0) {
+        return true;
+    }
     return false;
 }
 
 
 function gameEngine() {
     //p1 = upadet snake and food
+    music_sound.play();
     if (isCollide(snakearr)) {
         gameover_sound.play();
         music_sound.pause();
