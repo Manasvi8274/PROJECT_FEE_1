@@ -5,7 +5,7 @@ const gameover_sound = new Audio('../gameover.mp3');
 const move_sound = new Audio('../move.mp3');
 const music_sound = new Audio('../music.mp3');
 
-let speed = 6;
+let speed = 5;
 
 let lastPaintTime = 0;
 let snakearr = [
@@ -29,12 +29,12 @@ function main(ctime) {
 
 function isCollide(snakearr) {
     //if snake eat itself
-    for(let i =1;i < snakearr.length;i++){
-        if (snakearr[i].x === snakearr[0].x && snakearr[i].y === snakearr[0].y){
+    for (let i = 1; i < snakearr.length; i++) {
+        if (snakearr[i].x === snakearr[0].x && snakearr[i].y === snakearr[0].y) {
             return true;
         }
     }
-    if (snakearr[0].x >= 18 || snakearr[0].x<=0 || snakearr[0].y>=18 || snakearr[0].y <= 0) {
+    if (snakearr[0].x >= 18 || snakearr[0].x <= 0 || snakearr[0].y >= 18 || snakearr[0].y <= 0) {
         return true;
     }
     return false;
@@ -43,14 +43,15 @@ function isCollide(snakearr) {
 
 function gameEngine() {
     //p1 = upadet snake and food
-    music_sound.play();
     if (isCollide(snakearr)) {
         gameover_sound.play();
         music_sound.pause();
         InputDir = { x: 0, y: 0 };
         alert("GAME OVER");
-        snakearr = [{ x: 13, y: 15 }]
+        snakearr = [{ x: 13, y: 15 }];
+        // gameover_sound.play();
     }
+    music_sound.play();
     //if eat food then +snake and move food
     if (snakearr[0].y === food.y && snakearr[0].x === food.x) {
         food_sound.play();
@@ -60,7 +61,6 @@ function gameEngine() {
         food = { x: Math.round(a + (b - a) * Math.random()), y: Math.round(a + (b - a) * Math.random()) };
         // food_sound.pause();
     }
-
     //moving snake
     for (let i = snakearr.length - 2; i >= 0; i--) {
         const ele = snakearr[i];

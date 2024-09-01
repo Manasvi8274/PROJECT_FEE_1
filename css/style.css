@@ -4,7 +4,7 @@
 }
 
 .body {
-    background-image: url(../bg.jpg);
+    background-image: url(./bg.jpg);
     min-height: 100vh;
     background-size: 100vw 100vh;
     background-repeat: no-repeat;
@@ -25,16 +25,24 @@
 }
 
 .head {
-    background-color: red;
+    background: linear-gradient(red,blue);
     min-height: 1fr;
     min-width: 1fr;
+    border: .25vmin solid white;
+    border-radius: 12px;
 }
-.snake{
+
+.snake {
     background-color: purple;
+    border: .25vmin solid white;
+    border-radius: 12px;
+
 }
 
 .food {
     background-color: yellow;
+    border: .25vmin solid white;
+    border-radius: 12px;
     min-height: 1fr;
     min-width: 1fr;
 }
