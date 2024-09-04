@@ -25,7 +25,7 @@
 }
 
 .head {
-    background: linear-gradient(red,blue);
+    background: linear-gradient(red, blue);
     min-height: 1fr;
     min-width: 1fr;
     border: .25vmin solid white;
@@ -45,4 +45,20 @@
     border-radius: 12px;
     min-height: 1fr;
     min-width: 1fr;
+}
+
+#scoreBox {
+    position: absolute;
+    top: 19px;
+    right: 9px;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+#hiscoreBox {
+    position: absolute;
+    top: 69px;
+    right: 9px;
+    font-size: 35px;
+    font-weight: bold;
 }
