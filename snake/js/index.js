@@ -1,9 +1,9 @@
 //variables
 let InputDir = { x: 0, y: 0 };
-const food_sound = new Audio('../food.mp3');
-const gameover_sound = new Audio('../gameover.mp3');
-const move_sound = new Audio('../move.mp3');
-const music_sound = new Audio('../music.mp3');
+const food_sound = new Audio('/snake/js/food.mp3');
+const gameover_sound = new Audio('/snake/js/gameover.mp3');
+const move_sound = new Audio('/snake/js/move.mp3');
+const music_sound = new Audio('/snake/js/music.mp3');
 let speed = 5;
 
 let lastPaintTime = 0;
@@ -16,8 +16,15 @@ let hiscore = 0;
 
 
 //function
+
+function reset_hiscore() {
+    hiscore = 0;
+    localStorage.setItem("hiscore", JSON.stringify(hiscore));
+}
+
 function main(ctime) {
     window.requestAnimationFrame(main);//to make loop
+    hiscoreBox.innerHTML = "High Score : " + hiscore;
     if ((ctime - lastPaintTime) / 1000 < 1 / speed) {
         return;
     }
@@ -50,8 +57,8 @@ function gameEngine() {
         alert("GAME OVER");
         snakearr = [{ x: 13, y: 15 }];
         score = 0;
-        // scoreBox.innerHTML = "Score : " + score;
-        // gameover_sound.play();
+        scoreBox.innerHTML = "Score : " + score;
+        gameover_sound.play();
     }
     music_sound.play();
     //if eat food then +snake and move food
@@ -122,6 +129,7 @@ else {
     hiscore = JSON.parse(localStorage.getItem("hiscore"));
     localStorage.setItem("hiscore", JSON.stringify(hiscore));
     // hiscoreBox.innerHTML = "HIGH SCORE : " + hiscore;
+    // scoreBox.innerHTML = "Score = " + 1000;
 }
 
 window.requestAnimationFrame(main);//requestAnimationFrame is better than set intervel and good fps

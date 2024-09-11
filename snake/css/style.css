@@ -62,3 +62,19 @@
     font-size: 35px;
     font-weight: bold;
 }
+
+#hiscoreBoxreset {
+    position: absolute;
+    top: 109px;
+    right: 9px;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+#button {
+    height: 30px;
+    width: 170px;
+    font-size: 15px;
+    background: linear-gradient(to right, blue, green);
+    color: white;
+}
