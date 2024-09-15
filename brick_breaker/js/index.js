@@ -1,13 +1,13 @@
 
 let board;
-let boardwidth = 600;
-let boardheight = 600;
+let boardwidth = window.innerWidth / 2.7;
+let boardheight = window.innerHeight / 1.2;
 let context;
 
 //player
-let playerwidth = 80;
-let playerheight = 10;
-let playervelocityX = 15;
+let playerwidth = (boardwidth - 80) / 5;
+let playerheight = (boardwidth - 80) / 50;
+let playervelocityX = 20;
 
 let player = {
     x: boardwidth / 2 - playerwidth / 2,//to make center
@@ -18,8 +18,8 @@ let player = {
 }
 
 //ball
-let ballwidth = 10;
-let ballheight = 10;
+let ballwidth = boardwidth / 50;
+let ballheight = boardwidth / 50;
 let ballvelocityx = 3;
 let ballvelocityy = 2;
 let ball = {
@@ -33,9 +33,24 @@ let ball = {
 
 //blocks
 let blockarray = [];
-let blockwidth = 50;
-let blockheight = 10;
-let block
+let blockwidth = (boardwidth - 100) / 8;
+let blockheight = (boardwidth - 80) / 50;
+let blockcolumns = 8;
+let blockrows = 3;//more as level goes up
+let blockmaxrows = 10;
+let blockcount = 0;
+
+//starting block
+let blockx = 15;
+let blocky = 45;
+
+//score
+let score = 0;
+let hiscore = JSON.parse(localStorage.getItem("hiscore"));
+if (hiscore = null) {
+    hiscore = 0;
+    localStorage.setItem("hiscore", JSON.stringify(hiscore));
+}
 
 
 window.onload = function () {
@@ -49,6 +64,9 @@ window.onload = function () {
 
     requestAnimationFrame(update);//call a function update
     document.addEventListener("keydown", moveplayer);
+
+    //create a block
+    createblock();
 }
 
 function update() {
@@ -81,6 +99,41 @@ function update() {
         ball.velocityx *= -1;
     }
 
+    //blocks
+    context.fillStyle = "skyblue";
+    for (let i = 0; i < blockarray.length; i++) {
+        let block = blockarray[i];
+        if (!block.break) {//only not broken block
+            if (topcollision(ball, block) || bottomcollsion(ball, block)) {
+                block.break = true;
+                ball.velocityy *= -1;
+                blockcount -= 1;
+                score += 100;
+                if (hiscore < score) {
+                    hiscore = score;
+                    localStorage.setItem("hiscore", JSON.stringify(hiscore));
+                }
+            }
+            else if (leftcollision(ball, block) || rightcollision(ball, block)) {
+                block.break = true;
+                ball.velocityx *= -1;
+                blockcount -= 1;
+                score += 100;
+                if (hiscore < score) {
+                    hiscore = score;
+                    localStorage.setItem("hiscore", JSON.stringify(hiscore));
+                }
+            }
+            context.fillRect(block.x, block.y, block.width, block.height);
+        }
+    }
+
+    //score
+    context.font = "20px serif";
+    context.fillText(score, 10, 25);//10 right and 25 down
+    //hiscore
+    context.font = "20px serif";
+    context.fillText(hiscore, boardwidth - 40, 25);
 }
 
 
@@ -128,4 +181,21 @@ function rightcollision(ball, block) {
 //when ball collide from right
 function leftcollision(ball, block) {//ball is right fomr block
     return detectcollision(ball, block) && (block.x + block.width) > ball.x;
+}
+
+function createblock() {
+    blockarray = [];//clean array
+    for (let c = 0; c < blockcolumns; c++) {
+        for (let r = 0; r < blockrows; r++) {
+            let block = {
+                x: blockx + c * blockwidth + c * 10,//to set 10 pixels apart
+                y: blocky + r * blockheight + r * 10,//to set 10 space 
+                height: blockheight,
+                width: blockwidth,
+                break: false,
+            }
+            blockarray.push(block);
+        }
+    }
+    blockcount = blockarray.length;
 }
