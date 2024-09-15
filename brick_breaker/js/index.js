@@ -31,7 +31,11 @@ let ball = {
     velocityy: ballvelocityy,
 }
 
-
+//blocks
+let blockarray = [];
+let blockwidth = 50;
+let blockheight = 10;
+let block
 
 
 window.onload = function () {
