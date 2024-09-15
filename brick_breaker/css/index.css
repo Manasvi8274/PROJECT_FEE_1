@@ -1,0 +1,14 @@
+body {
+    text-align: center;
+    background-image: url("back.jpg");
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;
+}
+
+#board {
+    margin: 1%;
+    background-color: black;
+    border-top: 5px solid skyblue;
+    border-right: 5px solid skyblue;
+    border-left: 5px solid skyblue;
+}
