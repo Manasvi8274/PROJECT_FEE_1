@@ -40,6 +40,7 @@ function update() {
     context.fillRect(player.x, player.y, player.width, player.height);
 }
 
+
 function outbound(xpos) {
     return (xpos < 0 || xpos + playerwidth > boardwidth);
 }
