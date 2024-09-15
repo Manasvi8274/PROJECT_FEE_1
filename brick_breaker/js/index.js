@@ -130,10 +130,10 @@ function update() {
 
     //score
     context.font = "20px serif";
-    context.fillText(score, 10, 25);//10 right and 25 down
+    context.fillText("SCORE = " + score, 10, 25);//10 right and 25 down
     //hiscore
     context.font = "20px serif";
-    context.fillText(hiscore, boardwidth - 40, 25);
+    context.fillText("HISCORE = " + hiscore, boardwidth - 150, 25);
 }
 
 
