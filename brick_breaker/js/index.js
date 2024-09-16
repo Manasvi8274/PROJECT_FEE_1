@@ -1,4 +1,11 @@
+//musics
+let break_music = new Audio("/brick_breaker/js/collide.mp3");
+let gameover_music = new Audio("/brick_breaker/js/gameover.mp3");
+let point_musics = new Audio("/brick_breaker/js/point_up.mp3");
 
+
+
+//var
 let board;
 let boardwidth = window.innerWidth / 2.7;
 let boardheight = window.innerHeight / 1.2;
@@ -46,12 +53,19 @@ let blocky = 45;
 
 //score
 let score = 0;
-let hiscore = JSON.parse(localStorage.getItem("hiscore"));
-if (hiscore = null) {
+
+//highscore 
+let hiscore = localStorage.getItem("hiscore");
+if (hiscore === null) {
     hiscore = 0;
     localStorage.setItem("hiscore", JSON.stringify(hiscore));
 }
-
+else {
+    hiscore = JSON.parse(localStorage.getItem("hiscore"));
+    localStorage.setItem("hiscore", JSON.stringify(hiscore));
+    // hiscoreBox.innerHTML = "HIGH SCORE : " + hiscore;
+    // scoreBox.innerHTML = "Score = " + 1000;
+}
 
 window.onload = function () {
     board = document.getElementById("board");
@@ -106,9 +120,11 @@ function update() {
         if (!block.break) {//only not broken block
             if (topcollision(ball, block) || bottomcollsion(ball, block)) {
                 block.break = true;
+                point_musics.play();
                 ball.velocityy *= -1;
                 blockcount -= 1;
                 score += 100;
+                break_music.play();
                 if (hiscore < score) {
                     hiscore = score;
                     localStorage.setItem("hiscore", JSON.stringify(hiscore));
@@ -119,10 +135,6 @@ function update() {
                 ball.velocityx *= -1;
                 blockcount -= 1;
                 score += 100;
-                if (hiscore < score) {
-                    hiscore = score;
-                    localStorage.setItem("hiscore", JSON.stringify(hiscore));
-                }
             }
             context.fillRect(block.x, block.y, block.width, block.height);
         }
@@ -133,7 +145,7 @@ function update() {
     context.fillText("SCORE = " + score, 10, 25);//10 right and 25 down
     //hiscore
     context.font = "20px serif";
-    context.fillText("HISCORE = " + hiscore, boardwidth - 150, 25);
+    context.fillText("HI SCORE = " + hiscore, 420, 25);
 }
 
 
@@ -165,22 +177,38 @@ function detectcollision(a, b) {
 
 //when ball collide block  from above
 function topcollision(ball, block) {//ball is above block
-    return detectcollision(ball, block) && (ball.y + ball.height) > block.y;
+    if (detectcollision(ball, block) && (ball.y + ball.height) > block.y) {
+        point_musics.play();
+        return true;
+    }
+    return false;
 }
 
 //when ball collide block from down
 function bottomcollsion(ball, block) {//ball is below block
-    return detectcollision(ball, block) && (block.y + block.height) > ball.y;
+    if (detectcollision(ball, block) && (block.y + block.height) > ball.y) {
+        point_musics.play();
+        return true;
+    }
+    return false;
 }
 
 //when ball collide from left
 function rightcollision(ball, block) {
-    return detectcollision(ball, block) && (ball.x + ball.width) > block.x;
+    if (detectcollision(ball, block) && (ball.x + ball.width) > block.x) {
+        point_musics.play();
+        return true;
+    }
+    return false;
 }
 
 //when ball collide from right
 function leftcollision(ball, block) {//ball is right fomr block
-    return detectcollision(ball, block) && (block.x + block.width) > ball.x;
+    if (detectcollision(ball, block) && (block.x + block.width) > ball.x) {
+        point_musics.play();
+        return true;
+    }
+    return false;
 }
 
 function createblock() {
