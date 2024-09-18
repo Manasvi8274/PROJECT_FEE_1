@@ -1,8 +1,6 @@
 //musics
-let break_music = new Audio("/brick_breaker/js/collide.mp3");
+let gameOverMusicPlayed = false;
 let gameover_music = new Audio("/brick_breaker/js/gameover.mp3");
-let point_musics = new Audio("/brick_breaker/js/point_up.mp3");
-
 
 
 //var
@@ -28,7 +26,7 @@ let player = {
 let ballwidth = boardwidth / 50;
 let ballheight = boardwidth / 50;
 let ballvelocityx = 3;
-let ballvelocityy = 2;
+let ballvelocityy = -2;
 let ball = {
     x: boardwidth / 2,//inititl position
     y: boardheight / 2,
@@ -66,6 +64,8 @@ else {
     // hiscoreBox.innerHTML = "HIGH SCORE : " + hiscore;
     // scoreBox.innerHTML = "Score = " + 1000;
 }
+//gameover
+let gameover = false;
 
 window.onload = function () {
     board = document.getElementById("board");
@@ -85,6 +85,16 @@ window.onload = function () {
 
 function update() {
     requestAnimationFrame(update);//call a function update 
+    if (gameover) {
+        if (!gameOverMusicPlayed) {
+            gameover_music.play();
+            gameOverMusicPlayed = true;
+        }
+        setTimeout(() => {
+            gameover_music.pause();
+            document.addEventListener("keydown", moveplayer);
+        }, 1500);
+    }
     context.clearRect(0, 0, board.width, board.height);
     context.fillStyle = "lightgreen";
     context.fillRect(player.x, player.y, player.width, player.height);
@@ -103,6 +113,9 @@ function update() {
     }
     else if (ball.y + ball.height >= boardheight) {
         // gameover
+        context.font = "20px sans-serif";
+        context.fillText("GAME OVER: Press 'SPACEBAR' to restart", 80, 400);
+        gameover = true;
     }
 
     //bounce ball of player paddle
@@ -120,11 +133,9 @@ function update() {
         if (!block.break) {//only not broken block
             if (topcollision(ball, block) || bottomcollsion(ball, block)) {
                 block.break = true;
-                point_musics.play();
                 ball.velocityy *= -1;
                 blockcount -= 1;
                 score += 100;
-                break_music.play();
                 if (hiscore < score) {
                     hiscore = score;
                     localStorage.setItem("hiscore", JSON.stringify(hiscore));
@@ -140,12 +151,24 @@ function update() {
         }
     }
 
+    //next level
+    if (blockcount == 0) {
+        context.fillfont = "20px serif";
+        context.fillText("Congratulation You Cleared Level", 80, 400);
+        setTimeout(() => {
+
+        }, 1000);
+        score += 1000;
+        blockrows = Math.min(blockrows + 1, blockmaxrows);
+        createblock();
+    }
+
     //score
     context.font = "20px serif";
     context.fillText("SCORE = " + score, 10, 25);//10 right and 25 down
     //hiscore
     context.font = "20px serif";
-    context.fillText("HI SCORE = " + hiscore, 420, 25);
+    context.fillText("HI SCORE = " + hiscore, 390, 25);
 }
 
 
@@ -153,7 +176,12 @@ function outbound(xpos) {
     return (xpos < 0 || xpos + playerwidth > boardwidth);
 }
 function moveplayer(e) {
-    if (e.code == "ArrowLeft") {
+    if (gameover) {
+        if (e.code == "Space") {
+            resetgame();
+        }
+    }
+    else if (e.code == "ArrowLeft") {
         let nextplayerx = player.x - player.velocityX;
         if (!outbound(nextplayerx)) {
             player.x = nextplayerx;
@@ -178,7 +206,6 @@ function detectcollision(a, b) {
 //when ball collide block  from above
 function topcollision(ball, block) {//ball is above block
     if (detectcollision(ball, block) && (ball.y + ball.height) > block.y) {
-        point_musics.play();
         return true;
     }
     return false;
@@ -187,7 +214,6 @@ function topcollision(ball, block) {//ball is above block
 //when ball collide block from down
 function bottomcollsion(ball, block) {//ball is below block
     if (detectcollision(ball, block) && (block.y + block.height) > ball.y) {
-        point_musics.play();
         return true;
     }
     return false;
@@ -196,7 +222,6 @@ function bottomcollsion(ball, block) {//ball is below block
 //when ball collide from left
 function rightcollision(ball, block) {
     if (detectcollision(ball, block) && (ball.x + ball.width) > block.x) {
-        point_musics.play();
         return true;
     }
     return false;
@@ -205,7 +230,6 @@ function rightcollision(ball, block) {
 //when ball collide from right
 function leftcollision(ball, block) {//ball is right fomr block
     if (detectcollision(ball, block) && (block.x + block.width) > ball.x) {
-        point_musics.play();
         return true;
     }
     return false;
@@ -227,3 +251,36 @@ function createblock() {
     }
     blockcount = blockarray.length;
 }
+
+function resetgame() {
+    gameover = false;
+    player = {
+        x: boardwidth / 2 - playerwidth / 2,//to make center
+        y: boardheight - playerheight - 5,//to make height of player (-5 to make sure not to stick to boundary )
+        width: playerwidth,
+        height: playerheight,
+        velocityX: playervelocityX,
+    }
+    ball = {
+        x: boardwidth / 2,//inititl position
+        y: boardheight / 2,
+        width: ballwidth,
+        height: ballheight,
+        velocityx: ballvelocityx,
+        velocityy: ballvelocityy,
+    }
+    blockarray = [];
+    score = 0;
+    blockrows = 3;
+    createblock();
+}
+
+function resethiscore() {
+    hiscore = 0;
+    localStorage.setItem("hiscore", JSON.stringify(hiscore));
+}
+
+// const change = document.getElementById("switch");
+// change.addEventListener("click", () => {
+//     window.location.href = '/snake/index.html';
+// })

@@ -11,4 +11,20 @@ body {
     border-top: 5px solid skyblue;
     border-right: 5px solid skyblue;
     border-left: 5px solid skyblue;
+    /* display: block; */
+}
+
+.resethiscore {
+    margin: 10px;
+    border: 1px solid black;
+    background-color: red;
+    color: blue;
+    box-shadow: rgb(239, 221, 104) 5px 5px 5px;
+}
+.switch{
+    margin: 10px;
+    border: 1px solid black;
+    background-color: yellow;
+    color: rgb(0, 94, 0);
+    box-shadow: rgb(239, 104, 104) 5px 5px 5px;
 }
