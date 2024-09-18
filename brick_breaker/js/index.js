@@ -1,7 +1,8 @@
 //musics
 let gameOverMusicPlayed = false;
 let gameover_music = new Audio("/brick_breaker/js/gameover.mp3");
-
+let collide = new Audio("/brick_breaker/js/collide.wav");
+let music = new Audio("/brick_breaker/js/music.mp3");
 
 //var
 let board;
@@ -77,6 +78,7 @@ window.onload = function () {
     context.fillRect(player.x, player.y, player.width, player.height);
 
     requestAnimationFrame(update);//call a function update
+    music.play();
     document.addEventListener("keydown", moveplayer);
 
     //create a block
@@ -86,6 +88,7 @@ window.onload = function () {
 function update() {
     requestAnimationFrame(update);//call a function update 
     if (gameover) {
+        music.pause();
         if (!gameOverMusicPlayed) {
             gameover_music.play();
             gameOverMusicPlayed = true;
@@ -206,6 +209,7 @@ function detectcollision(a, b) {
 //when ball collide block  from above
 function topcollision(ball, block) {//ball is above block
     if (detectcollision(ball, block) && (ball.y + ball.height) > block.y) {
+        collide.play();
         return true;
     }
     return false;
@@ -214,6 +218,7 @@ function topcollision(ball, block) {//ball is above block
 //when ball collide block from down
 function bottomcollsion(ball, block) {//ball is below block
     if (detectcollision(ball, block) && (block.y + block.height) > ball.y) {
+        collide.play();
         return true;
     }
     return false;
@@ -222,6 +227,7 @@ function bottomcollsion(ball, block) {//ball is below block
 //when ball collide from left
 function rightcollision(ball, block) {
     if (detectcollision(ball, block) && (ball.x + ball.width) > block.x) {
+        collide.play();
         return true;
     }
     return false;
@@ -230,6 +236,7 @@ function rightcollision(ball, block) {
 //when ball collide from right
 function leftcollision(ball, block) {//ball is right fomr block
     if (detectcollision(ball, block) && (block.x + block.width) > ball.x) {
+        collide.play();
         return true;
     }
     return false;
