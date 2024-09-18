@@ -78,3 +78,11 @@
     background: linear-gradient(to right, blue, green);
     color: white;
 }
+
+#switch {
+    position: absolute;
+    top: 149px;
+    right: 9px;
+    font-size: 35px;
+    font-weight: bold;
+}

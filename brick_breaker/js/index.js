@@ -54,16 +54,14 @@ let blocky = 45;
 let score = 0;
 
 //highscore 
-let hiscore = localStorage.getItem("hiscore");
+let hiscore = localStorage.getItem("brickbreaker-hiscore");
 if (hiscore === null) {
     hiscore = 0;
-    localStorage.setItem("hiscore", JSON.stringify(hiscore));
+    localStorage.setItem("brickbreaker-hiscore", JSON.stringify(hiscore));
 }
 else {
-    hiscore = JSON.parse(localStorage.getItem("hiscore"));
-    localStorage.setItem("hiscore", JSON.stringify(hiscore));
-    // hiscoreBox.innerHTML = "HIGH SCORE : " + hiscore;
-    // scoreBox.innerHTML = "Score = " + 1000;
+    hiscore = JSON.parse(localStorage.getItem("brickbreaker-hiscore"));
+    localStorage.setItem("brickbreaker-hiscore", JSON.stringify(hiscore));
 }
 //gameover
 let gameover = false;
@@ -141,7 +139,7 @@ function update() {
                 score += 100;
                 if (hiscore < score) {
                     hiscore = score;
-                    localStorage.setItem("hiscore", JSON.stringify(hiscore));
+                    localStorage.setItem("brickbreaker-hiscore", JSON.stringify(hiscore));
                 }
             }
             else if (leftcollision(ball, block) || rightcollision(ball, block)) {
@@ -284,7 +282,7 @@ function resetgame() {
 
 function resethiscore() {
     hiscore = 0;
-    localStorage.setItem("hiscore", JSON.stringify(hiscore));
+    localStorage.setItem("brickbreaker-hiscore", JSON.stringify(hiscore));
 }
 
 // const change = document.getElementById("switch");

@@ -19,7 +19,7 @@ let hiscore = 0;
 
 function reset_hiscore() {
     hiscore = 0;
-    localStorage.setItem("hiscore", JSON.stringify(hiscore));
+    localStorage.setItem("snake-hiscore", JSON.stringify(hiscore));
 }
 
 function main(ctime) {
@@ -67,7 +67,7 @@ function gameEngine() {
         score += 1;
         if (score > hiscore) {
             hiscore = score;
-            localStorage.setItem("hiscore", JSON.stringify(hiscore));
+            localStorage.setItem("snake-hiscore", JSON.stringify(hiscore));
             hiscoreBox.innerHTML = "High Score : " + hiscore;
         }
         scoreBox.innerHTML = "Score : " + score;
@@ -120,16 +120,14 @@ function gameEngine() {
 
 //main logic starts
 
-hiscore = localStorage.getItem("hiscore");
+hiscore = localStorage.getItem("snake-hiscore");
 if (hiscore === null) {
     hiscore = 0;
-    localStorage.setItem("hiscore", JSON.stringify(hiscore));
+    localStorage.setItem("snake-hiscore", JSON.stringify(hiscore));
 }
 else {
-    hiscore = JSON.parse(localStorage.getItem("hiscore"));
-    localStorage.setItem("hiscore", JSON.stringify(hiscore));
-    // hiscoreBox.innerHTML = "HIGH SCORE : " + hiscore;
-    // scoreBox.innerHTML = "Score = " + 1000;
+    hiscore = JSON.parse(localStorage.getItem("snake-hiscore"));
+    localStorage.setItem("snake-hiscore", JSON.stringify(hiscore));
 }
 
 window.requestAnimationFrame(main);//requestAnimationFrame is better than set intervel and good fps
