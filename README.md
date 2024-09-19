@@ -11,4 +11,12 @@ Games
         Snake movement controlled using keyboard input
         High score stored in local storage
         Reset high score using the reset button
-    
+    Brick Breaker
+        Built using HTML canvas element
+        Utilizes JavaScript functions such as fillText and fillRect to create game elements
+        Bricks
+        Ball
+        Player pad
+        High score stored in local storage
+        Reset high score using the reset button
+        Switch to Snakemania game using the switch button
