@@ -20,3 +20,7 @@ Twin Games: Snakemania and Brick Breaker
 #####     6)High score stored in local storage
 #####     7)Reset high score using the reset button
 #####     8)Switch to Snakemania game using the switch button
+
+# HOW TO USE
+#### To play game simply clone respository and go to any game folder and run index.html for the game on server of your choice
+#### Then you can enjoy the game 
